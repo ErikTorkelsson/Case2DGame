@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Case2DGame // Dags att committa
+namespace Case2DGame // Dags att committagggggg
 {
     public abstract class Movement
     {
