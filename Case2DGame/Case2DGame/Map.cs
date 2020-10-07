@@ -19,6 +19,7 @@ namespace Case2DGame
 
         public static void CreateMap(int width, int length)
         {
+            // Kör alla metoder som behövs för att skriva ut spelplanen
             Width = width;
             Length = length;
 
@@ -28,16 +29,15 @@ namespace Case2DGame
             PrintMap();
         }
         public static void AddEntityToList()
-        {
-            for (int i = 0; i < 5; i++)
+        { 
+            // Lägger in alla entiteter som ska vara på spelplanen i en lista.
+            for (int i = 0; i < 3; i++)
             {
                 var newEnemy = new Enemy(Width,Length);
                 Entitylist.Add(newEnemy);
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                var newWizard = new Wizard(Width,Length);
+                var newWizard = new Wizard(Width, Length);
                 Entitylist.Add(newWizard);
+
             }
             Dagger newDagger = new Dagger(Width,Length);
             Entitylist.Add(newDagger);
@@ -47,6 +47,7 @@ namespace Case2DGame
         }
         public static void AddEntityToMap()
         {
+            // Lägger in alla entiteter i spelplans arrayen
             for (int i = 0; i < spelPlan.GetLength(0); i++)
             {
                 for (int j = 0; j < spelPlan.GetLength(1); j++)
@@ -57,6 +58,7 @@ namespace Case2DGame
         }
         public static void AddEntity(int i, int j)
         {
+            // Kollar om det ska läggas in en entitet på spelplanen
             while (true)
             {
                 foreach (var item in Entitylist)
@@ -76,6 +78,7 @@ namespace Case2DGame
         }
         public static void AddWalls()
         {
+            // lägger in väggarna i spelplanen
             Wall topLeft = new Wall(0);
             Wall topRight = new Wall(1);
             Wall bottomLeft = new Wall(2);
@@ -107,6 +110,7 @@ namespace Case2DGame
         }
         public static void PrintMap()
         {
+            // skriver ut allt som finns inlaggt i spelplans arrayen.
             for (int i = 0; i < spelPlan.GetLength(1); i++)
             {
                 for (int j = 0; j < spelPlan.GetLength(0); j++)

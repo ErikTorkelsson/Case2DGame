@@ -19,7 +19,7 @@ namespace Case2DGame
         }
         public virtual void Use() { }
     }
-    class Dagger : Item // Dagger ärver från Item
+    class Dagger : Item
     {
         public Dagger(int width, int length) : base(width, length)
         {
@@ -37,7 +37,6 @@ namespace Case2DGame
         public HealthPotion(int width, int length) : base(width, length)
         {
             Type = "Healthpotion";
-            //Property = Health =+ 5;
             X = rnd.Next(1, width - 1);
             Y = rnd.Next(1, length - 1);
         }

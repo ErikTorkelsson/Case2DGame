@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Case2DGame
 {
-    public class Creature : Entity //Creature ärver från Entity
+    public class Creature : Entity
     {
         public int Width { get; set; }
         public int Length { get; set; }

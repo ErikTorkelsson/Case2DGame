@@ -8,6 +8,7 @@ namespace Case2DGame
     {
         public static void Interact()
         {
+            // Kollar vilken typ av objekt som spelaren har hamnat på
             var entity = Map.spelPlan[player.X, player.Y] as Entity;            
 
             if (entity is Emptyspace)
@@ -16,13 +17,14 @@ namespace Case2DGame
             }
             else if (entity is Enemy)
             {
-                MessageBoard("Du möter en Enemy.");
+                MessageBoard("Du möter en Enemy. Skriv 1 eller 2 tryck sedan Enter");
                 Attack(player, entity);
             }
             else if (entity is Wizard)
             {
                 MessageBoard("Du Möter en Wizard.");
                 player.Health = +2;
+                Map.spelPlan[player.X, player.Y] = Map.emptyspace;
                 counter++;
             }
             else if (entity is Item)
@@ -49,7 +51,7 @@ namespace Case2DGame
                 if (nr == 1)
                 {
                     enemy.Health -= player.Dmg;
-                    MessageBoard($"Du Attackerar med {player.Dmg}, Enemy har {enemy.Health} Hp kvar.");
+                    MessageBoard($"Du Attackerar med {player.Dmg}, Din fiende har {enemy.Health} Hp kvar.");
                     if (enemy.Health <= 0)
                     {
                         MessageBoard("Du vann");
@@ -64,7 +66,7 @@ namespace Case2DGame
                         break;
                     }
                     player.Health -= enemy.Dmg;
-                    MessageBoard($"Enemy Attackerar med {enemy.Dmg}, Du har {player.Health} Hp kvar.");
+                    MessageBoard($"Fienden Attackerar med {enemy.Dmg}, Du har {player.Health} Hp kvar.");
                 }
                 else if (nr == 2)
                 {
@@ -77,7 +79,7 @@ namespace Case2DGame
                 }
             }
         }
-        static void MessageBoard(String Message)
+        public static void MessageBoard(String Message)
         {
             Console.SetCursorPosition(Map.Width + 1, counter);
             Console.Write(Message);
