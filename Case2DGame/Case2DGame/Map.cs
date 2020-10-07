@@ -1,37 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 
 namespace Case2DGame
 {
     class Map
     {
-        public static int bredd = 40;
+        public static int Width = 40;
 
-        public static int längd = 20;
+        public static int Length = 20;
 
         public static List<Entity> Entitylist = new List<Entity>();
 
-        public static Entity[,] spelPlan = new Entity[bredd, längd];
+        public static Entity[,] spelPlan = new Entity[Width, Length];
 
         public static Emptyspace emptyspace = new Emptyspace();
 
-        public static void AddEntity()
+        public static void CreateMap(int width, int length)
+        {
+            Width = width;
+            Length = length;
+
+            AddEntityToList();
+            AddEntityToMap();
+            AddWalls();
+            PrintMap();
+        }
+        public static void AddEntityToList()
         {
             for (int i = 0; i < 5; i++)
             {
-                var newEnemy = new Enemy();
+                var newEnemy = new Enemy(Width,Length);
                 Entitylist.Add(newEnemy);
             }
             for (int i = 0; i < 3; i++)
             {
-                var newWizard = new Wizard();
+                var newWizard = new Wizard(Width,Length);
                 Entitylist.Add(newWizard);
             }
-            Dagger newDagger = new Dagger();
+            Dagger newDagger = new Dagger(Width,Length);
             Entitylist.Add(newDagger);
-            HealthPotion healthPotion = new HealthPotion();
+            HealthPotion healthPotion = new HealthPotion(Width,Length);
             Entitylist.Add(healthPotion);
+            Entitylist.Add(Movement.player);
         }
         public static void AddEntityToMap()
         {
@@ -39,52 +51,59 @@ namespace Case2DGame
             {
                 for (int j = 0; j < spelPlan.GetLength(1); j++)
                 {
-                    while (true)
-                    {
-                        foreach (var item in Entitylist)
-                        {
-                            if (item.x == j && item.y == i)
-                            {
-                                spelPlan[i, j] = item;
-                                break;
-                            }
-                            else
-                            {
-                                spelPlan[i, j] = emptyspace;
-                            }
-                        }
-                        break;
-                    }
+                    AddEntity(i,j);
                 }
             }
-            AddWalls();
+        }
+        public static void AddEntity(int i, int j)
+        {
+            while (true)
+            {
+                foreach (var item in Entitylist)
+                {
+                    if (item.X == i && item.Y == j)
+                    {
+                        spelPlan[i, j] = item;
+                        break;
+                    }
+                    else
+                    {
+                        spelPlan[i, j] = emptyspace;
+                    }
+                }
+                break;
+            }
         }
         public static void AddWalls()
         {
-            Wall topLeft = new Wall(1);
-            Wall topRight = new Wall(2);
-            Wall bottomLeft = new Wall(3);
-            Wall bottomright = new Wall(4);
-            Wall vog = new Wall(5);
-            Wall lod = new Wall(6);
+            Wall topLeft = new Wall(0);
+            Wall topRight = new Wall(1);
+            Wall bottomLeft = new Wall(2);
+            Wall bottomright = new Wall(3);
+            Wall horizontal = new Wall(4);
+            Wall vertical = new Wall(5);
 
             spelPlan[0, 0] = topLeft;
+            spelPlan[spelPlan.GetLength(0) - 1, 0] = topRight;
+            spelPlan[0, spelPlan.GetLength(1) - 1] = bottomLeft;
+            spelPlan[spelPlan.GetLength(0) - 1, spelPlan.GetLength(1) - 1] = bottomright;
+
             for (int i = 1; i < spelPlan.GetLength(0) - 1; i++)
             {
-                spelPlan[i, 0] = vog;
+                spelPlan[i, 0] = horizontal;
             }
-            spelPlan[spelPlan.GetLength(0) - 1, 0] = topRight;
+
             for (int i = 1; i < spelPlan.GetLength(1) - 1; i++)
             {
-                spelPlan[0, i] = lod;
-                spelPlan[spelPlan.GetLength(0) - 1, i] = lod;
+                spelPlan[0, i] = vertical;
+                spelPlan[spelPlan.GetLength(0) - 1, i] = vertical;
             }
-            spelPlan[0, spelPlan.GetLength(1) - 1] = bottomLeft;
+           
             for (int i = 1; i < spelPlan.GetLength(0) - 1; i++)
             {
-                spelPlan[i, spelPlan.GetLength(1) - 1] = vog;
+                spelPlan[i, spelPlan.GetLength(1) - 1] = horizontal;
             }
-            spelPlan[spelPlan.GetLength(0) - 1, spelPlan.GetLength(1) - 1] = bottomright;
+           
         }
         public static void PrintMap()
         {
@@ -92,7 +111,7 @@ namespace Case2DGame
             {
                 for (int j = 0; j < spelPlan.GetLength(0); j++)
                 {
-                    Console.Write(spelPlan[j, i].ikon);
+                    Console.Write(spelPlan[j, i].Ikon);
                 }
                 Console.Write("\n");
             }

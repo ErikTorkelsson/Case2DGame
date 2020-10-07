@@ -6,15 +6,16 @@ namespace Case2DGame
 {
     static class Game
     {
+        public static bool Gameloop = true;
         public static void Start()
         {
+            int Width = 40;
+            int Length = 20;
+
+            Map.CreateMap(Width, Length);
             Console.CursorVisible = false;
 
-            Map.AddEntity();
-            Map.AddEntityToMap();
-            Map.PrintMap();
-
-            while (true)
+            while (Gameloop)
             {
                 Movement.Move();
             }

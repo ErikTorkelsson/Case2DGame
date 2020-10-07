@@ -6,14 +6,15 @@ namespace Case2DGame
 {
     public abstract class Movement
     {
-        public static Player player = new Player();
-        public static int counter { get; set; }
+        public static Player player = new Player(Map.Width,Map.Length);
+
+        public static int counter;
         public static bool win = false;
 
         public static void Move()
         {
-            int x = player.x;
-            int y = player.y;
+            int x = player.X;
+            int y = player.Y;
 
             MovePlayer();
             Interaction.Interact();
@@ -24,30 +25,29 @@ namespace Case2DGame
             }
             else
             {
-                player.x = x;
-                player.y = y;
+                player.X = x;
+                player.Y = y;
                 SetCursorPosition();
             }
-
         }
         public static void MovePlayer()
         {
             ConsoleKey move = Console.ReadKey().Key;
-            Console.SetCursorPosition(player.x, player.y);
+            Console.SetCursorPosition(player.X, player.Y);
             Console.Write(' ');
             switch (move)
             {
                 case ConsoleKey.UpArrow:
-                    player.y--;
+                    player.Y--;
                     break;
                 case ConsoleKey.LeftArrow:
-                    player.x--;
+                    player.X--;
                     break;
                 case ConsoleKey.DownArrow:
-                    player.y++;
+                    player.Y++;
                     break;
                 case ConsoleKey.RightArrow:
-                    player.x++;
+                    player.X++;
                     break;
                 case ConsoleKey.Enter:
 
@@ -57,19 +57,17 @@ namespace Case2DGame
         }
         static void ShowInventory(Player player)
         {
-
             foreach (var item in player.Inventory)
             {
-                Console.SetCursorPosition(Map.bredd + 1, counter);
+                Console.SetCursorPosition(Map.Width + 1, counter);
                 Console.WriteLine(item.Type);
                 counter++;
             }
-
         }
         public static void SetCursorPosition()
         {
-            Console.SetCursorPosition(player.x, player.y);
-            Console.Write(player.ikon);
+            Console.SetCursorPosition(player.X, player.Y);
+            Console.Write(player.Ikon);
         }
     }
 }
