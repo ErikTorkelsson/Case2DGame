@@ -19,7 +19,7 @@ namespace Case2DGame
         }
         public virtual void Use() { }
     }
-    class Dagger : Item
+    class Dagger : Item // Dagger ärver från Item
     {
         public Dagger(int width, int length) : base(width, length)
         {
