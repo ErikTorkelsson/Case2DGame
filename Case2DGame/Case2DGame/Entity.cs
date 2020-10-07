@@ -20,7 +20,7 @@ namespace Case2DGame
             Ikon = ' ';
         }
     }
-    class Wall : Entity
+    class Wall : Entity // Wall ärver från Entity
     {
         char[] Frame = new char[] { '╔', '╗', '╚', '╝', '═', '║', };
         public Wall(int nr)
